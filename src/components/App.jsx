@@ -10,7 +10,6 @@ import css from './App.module.css';
 
 const App = () => {
   const [images, setImages] = useState([]);
-  const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
@@ -29,24 +28,23 @@ const App = () => {
     if (query === '') {
       return;
     }
-    setError(false);
     try {
       getImages(query, page).then(response => {
         if (!response.data.total) {
           alert("Sorry, there's no such images");
         }
         setImages(images => [...images, ...response.data.hits]);
-        settotalHits(response.data.total);
-        setisLoading(false);
+        setTotalHits(response.data.total);
+        setIsLoading(false);
       });
     } catch (error) {
-      setError(true);
+      console.log('Error');
     } finally {
-      setisLoading({ isLoading: false });
+      setIsLoading(false);
     }
   }, [query, page]);
 
-  const loadMoreImages = () => {
+  const moreImages = () => {
     setPage(prevState => prevState + 1);
   };
 
@@ -63,13 +61,13 @@ const App = () => {
 
   return (
     <div className={css.App}>
-      <SearchBar makeRequest={this.makeRequest} />
+      <SearchBar makeRequest={makeRequest} />
       {isLoading && <Loader />}
       {images.length > 0 && (
         <ImageGallery images={images} imageOnClick={showModalImage} />
       )}
 
-      {totalHits > images.length && <Button moreImage={loadMoreImages} />}
+      {totalHits > images.length && <Button moreImages={moreImages} />}
       {isLoading && <Loader />}
       {showModal && (
         <Modal
