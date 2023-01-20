@@ -16,7 +16,7 @@ const App = () => {
   const [totalHits, setTotalHits] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  const makeRequest = e => {
+  const searchForImages = e => {
     e.preventDefault();
     const searchValue = e.target.elements.searchValue.value;
     setImages([]);
@@ -61,10 +61,10 @@ const App = () => {
 
   return (
     <div className={css.App}>
-      <SearchBar makeRequest={makeRequest} />
+      <SearchBar searchForImages={searchForImages} />
       {isLoading && <Loader />}
       {images.length > 0 && (
-        <ImageGallery images={images} imageOnClick={showModalImage} />
+        <ImageGallery images={images} onClick={showModalImage} />
       )}
 
       {totalHits > images.length && <Button moreImages={moreImages} />}

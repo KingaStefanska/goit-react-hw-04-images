@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import css from './SearchBar.module.css';
 
-const SearchBar = ({ makeRequest }) => (
+const SearchBar = ({ searchForImages }) => (
   <header className={css.SearchBar}>
-    <form className={css.SearchForm} onSubmit={makeRequest}>
+    <form className={css.SearchForm} onSubmit={searchForImages}>
       <button type="submit" className={css.SearchFormButton}>
         <span className={css.SearchFormBtnLabel}>Search</span>
       </button>
@@ -21,7 +21,7 @@ const SearchBar = ({ makeRequest }) => (
 );
 
 SearchBar.propTypes = {
-  makeRequest: PropTypes.func.isRequired,
+  searchForImages: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

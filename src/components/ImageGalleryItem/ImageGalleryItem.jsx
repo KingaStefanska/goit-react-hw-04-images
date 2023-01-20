@@ -3,20 +3,26 @@ import css from './ImageGalleryItem.module.css';
 
 const ImageGalleryItem = ({ images, onClick }) => {
   return (
-    <li className={css.ImageGalleryItem}>
-      <img
-        className={css.ImageGalleryItemImage}
-        src={images.webformatURL}
-        alt={images.tags}
-        onClick={() => onClick(images.largeImageURL)}
-      />
-    </li>
+    <>
+      {images.map(image => (
+        <li key={image.id} onClick={onClick} className={css.ImageGalleryItem}>
+          <img
+            className={css.image}
+            src={image.webformatURL}
+            alt={image.tags}
+            onClick={() => onClick(image.id)}
+          />
+        </li>
+      ))}
+    </>
   );
 };
 
 ImageGalleryItem.propTypes = {
+  onClick: PropTypes.func.isRequired,
   images: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.number.isRequired,
       tags: PropTypes.string.isRequired,
       webformatURL: PropTypes.string.isRequired,
       largeImageURL: PropTypes.string.isRequired,
