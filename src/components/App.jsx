@@ -14,7 +14,11 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
   const [totalHits, setTotalHits] = useState('');
-  const [showModal, setShowModal] = useState(false);
+  const [modal, setModal] = useState({
+    show: false,
+    largeImageURL: '',
+    tags: '',
+  });
 
   const searchForImages = e => {
     e.preventDefault();
@@ -50,13 +54,18 @@ const App = () => {
 
   const showModalImage = id => {
     const image = images.find(image => image.id === id);
-    setShowModal({
+    setModal({
+      show: true,
       largeImageURL: image.largeImageURL,
       tags: image.tags,
     });
   };
   const closeModalImage = () => {
-    setShowModal(null);
+    setModal({
+      show: false,
+      largeImageURL: '',
+      tags: '',
+    });
   };
 
   return (
@@ -69,10 +78,10 @@ const App = () => {
 
       {totalHits > images.length && <Button moreImages={moreImages} />}
       {isLoading && <Loader />}
-      {showModal && (
+      {modal.show && (
         <Modal
-          modalImage={showModal.largeImageURL}
-          tags={showModal.tags}
+          modalImage={modal.largeImageURL}
+          tags={modal.tags}
           closeModal={closeModalImage}
         />
       )}
